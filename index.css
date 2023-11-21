@@ -40,6 +40,9 @@
     padding: 8px;
     border: 8px;
     cursor: pointer;
+    display: flex;
+    justify-content: space-around;
+    
 }
 
 .res-logo {
@@ -56,4 +59,9 @@
     width:200px;
     margin:10px;
     background-color: gainsboro;
+}
+
+.btn-login {
+    padding: 0 10;
+    margin: 10px;
 }
