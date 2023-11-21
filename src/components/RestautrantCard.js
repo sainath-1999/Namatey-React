@@ -2,7 +2,7 @@ import { MOCK_URL } from "../utils/constants";
 const RestautrantCard = (props) => {
   const { resData } = props;
   const { imageId, name, price, category, ratings } = resData?.card?.info;
-  console.log("props", props);
+  // console.log("props", props);
   return (
     <div className="res-card" style={{ background: "#f0f0f0" }}>
       <img className="res-logo" src={MOCK_URL + imageId} />
