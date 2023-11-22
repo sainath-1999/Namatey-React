@@ -65,3 +65,10 @@
     padding: 0 10;
     margin: 10px;
 }
+.filter{
+    cursor: pointer;
+}
+
+.search {
+    cursor:pointer;
+}

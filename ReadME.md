@@ -56,3 +56,8 @@ import {Component} from 'path';
     (Normal JS utility functions)
     -useState() - Suoer powerful react variables
     -useEffect()
+
+# Two types of routing
+
+1.Client Side Routing
+2.Server Side Routing
