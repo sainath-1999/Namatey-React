@@ -61,3 +61,21 @@ import {Component} from 'path';
 
 1.Client Side Routing
 2.Server Side Routing
+
+Life cycle of react
+
+/
+
+# parent constructor is called
+# parent render is called
+
+*First child constructor is called
+*First Child render is called
+
+*second Child Constructor is called
+*second Child render is called
+
++First Child ComponentDidMount is called
++Second Child ComponentDidMount is called
+
+# Parent ComponentDidMount is called.
