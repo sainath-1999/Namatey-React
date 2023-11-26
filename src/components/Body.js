@@ -1,8 +1,8 @@
-import resList from "../utils/mockData";
 import RestautrantCard from "./RestautrantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
   // * local state variable --- Super powerful variable
@@ -10,6 +10,8 @@ const Body = () => {
   const [filteredReastaurentlist, setFilteredReastaurentList] = useState([]); // another copy
 
   const [searchText, setSearchText] = useState("");
+  const onlineStatus = useOnlineStatus();
+
   useEffect(() => {
     fetcheData([]);
   }, []);
@@ -30,22 +32,27 @@ const Body = () => {
     );
   };
 
-  // * Conditional Rendering json.data.cards[2].groupedCard?.cardGroupMap?.REGULAR?.cards[5]?.cardcostForTwo
+  if (onlineStatus === "false") {
+    return <h1>Your are offline please check your connection!!!</h1>;
+  }
+
+  // * Conditional Rendering
 
   return reastaurentList.length === 0 ? (
     <Shimmer />
   ) : (
     <div className="body">
-      <div className="filter-btn">
-        <div className="search">
+      <div className="filter-btn flex">
+        <div className="search  m-4 p-4 space-x-1">
           <input
             type="text"
+            className="border border-solid border-black"
             placeholder="enter the value"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
           <button
-            className="search"
+            className="search px-4 bg-green-200 rounded-lg "
             onClick={() => {
               const filteredlist = reastaurentList.filter((res) =>
                 res.info.name.toLowerCase().includes(searchText.toLowerCase())
@@ -56,24 +63,25 @@ const Body = () => {
             search
           </button>
         </div>
-
-        <button
-          className="filter"
-          onClick={() => {
-            // * Filter the Reastraut cards and update the UI
-            // * searchText
-            const filteredlist = reastaurentList.filter(
-              (res) => res.info.avgRating > 4
-            );
-            setFilteredReastaurentList(filteredlist);
-            console.log("reastaruantLinst", reastaurentList);
-          }}
-        >
-          Top Rated Reastaurants
-        </button>
+        <div className="search  m-4 p-4 space-x-1">
+          <button
+            className="filter px-4 bg-gray-200 rounded-lg "
+            onClick={() => {
+              // * Filter the Reastraut cards and update the UI
+              // * searchText
+              const filteredlist = reastaurentList.filter(
+                (res) => res.info.avgRating > 4
+              );
+              setFilteredReastaurentList(filteredlist);
+              console.log("reastaruantLinst", reastaurentList);
+            }}
+          >
+            Top Rated Reastaurants
+          </button>
+        </div>
       </div>
 
-      <div className="res-container">
+      <div className="flex flex-wrap">
         {/* <RestautrantCard resData={resList[0]} /> */}
         {filteredReastaurentlist?.map((restaurant) => (
           <Link
