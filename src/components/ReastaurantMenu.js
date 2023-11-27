@@ -19,12 +19,12 @@ const ReastaurantMenu = () => {
   console.log("item cards", itemCards);
 
   return (
-    <div className="menu">
-      <h1>{name}</h1>
+    <div className="m-4 p-4 bg-slate-100 shadow-lg w-80">
+      <h1 className="font-bold text-lg">{name}</h1>
       <p>
         {cuisines} -{costForTwoMessage}
       </p>
-      <ul>
+      <ul className="te">
         {itemCards?.map((item) => (
           <li key={item.card.info.id}>
             {item.card.info.name} -
