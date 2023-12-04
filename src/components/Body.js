@@ -1,4 +1,4 @@
-import RestautrantCard from "./RestautrantCard";
+import RestautrantCard, { withPromtedStatus } from "./RestautrantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
@@ -12,24 +12,34 @@ const Body = () => {
   const [searchText, setSearchText] = useState("");
   const onlineStatus = useOnlineStatus();
 
+  const RestraurantCardStatus = withPromtedStatus(RestautrantCard);
+
   useEffect(() => {
     fetcheData([]);
   }, []);
-  console.log("body rendered");
+  // console.log("body rendered");
 
   const fetcheData = async () => {
     const data = await fetch(
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.062392&lng=77.570698&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      //"https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.062392&lng=77.570698&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      // {
+      //   body: JSON.stringify({
+      //     lat: "12.9848397",
+      //     lng: "77.7550999",
+      //   }),
+      // }
     );
 
     const json = await data.json();
-    console.log("json", json);
+    // console.log("json", json);
     setReastaurentList(
       json.data.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
     setFilteredReastaurentList(
       json.data.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
+    // console.log("restaurantListt", reastaurentList);
   };
 
   if (onlineStatus === "false") {
@@ -37,10 +47,10 @@ const Body = () => {
   }
 
   // * Conditional Rendering
+  if (reastaurentList?.length === 0) return <Shimmer />;
+  //reastaurentList?.length === 0 ? (<shimmer />
 
-  return reastaurentList.length === 0 ? (
-    <Shimmer />
-  ) : (
+  return (
     <div className="body">
       <div className="filter-btn flex">
         <div className="search  m-4 p-4 space-x-1">
@@ -88,7 +98,12 @@ const Body = () => {
             key={restaurant.info.id}
             to={"/restaurants/" + restaurant.info.id}
           >
-            <RestautrantCard key={restaurant.info.id} resData={restaurant} />
+            {restaurant.info.isOpen ? (
+              <RestraurantCardStatus resData={restaurant} />
+            ) : (
+              <RestautrantCard resData={restaurant} />
+            )}
+            {/* <RestautrantCard key={restaurant.info.id} resData={restaurant} /> */}
           </Link>
         ))}
       </div>
