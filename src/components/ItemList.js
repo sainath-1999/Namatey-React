@@ -1,6 +1,16 @@
+import { useDispatch } from "react-redux";
+import { addItem } from "../utils/cartSlice";
 import { MOCK_URL } from "../utils/constants";
 const ItemList = ({ items }) => {
-  //console.log("items", items);
+  const dispatch = useDispatch();
+  const handleAddItem = (item) => {
+    // dispatch as action
+    dispatch(addItem(item));
+
+    // {
+    //   payload: "pizaa"
+    // }
+  };
   return (
     <div>
       {items.map((item) => (
@@ -16,14 +26,17 @@ const ItemList = ({ items }) => {
                 - ₹{" "}
                 {item?.card?.info?.price
                   ? item?.card?.info?.price / 100
-                  : item?.card?.info?.price.defaultPrice / 100}
+                  : item?.card?.info?.price?.defaultPrice / 100}
               </span>
             </div>
-            <p className="text-xs">{item.card.info.description}</p>
+            <p className="text-xs">{item?.card?.info?.description}</p>
           </div>
           <div className=" p-4 w-3/12">
             <div className="absolute">
-              <button className="p-2 bg-black text-white shadow-lg  mx-16 rounded-2xl ">
+              <button
+                className="p-2 bg-black text-white shadow-lg  mx-16 rounded-2xl "
+                onClick={() =>handleAddItem(item )}
+              >
                 Add +
               </button>
             </div>

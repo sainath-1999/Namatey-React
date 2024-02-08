@@ -62,11 +62,12 @@ import {Component} from 'path';
 1.Client Side Routing
 2.Server Side Routing
 
-Life cycle of react
+# Life cycle of react
 
 /
 
 # parent constructor is called
+
 # parent render is called
 
 *First child constructor is called
@@ -79,3 +80,12 @@ Life cycle of react
 +Second Child ComponentDidMount is called
 
 # Parent ComponentDidMount is called.
+
+# Redux Toolkit
+
+- Install @reduxjs/toolkit and react-redux
+- Build our store
+- connect our store to our app
+- Slice (cartSlice)
+- dispatch (action)
+- Selector
