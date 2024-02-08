@@ -3,13 +3,14 @@ import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import { API_URL } from "../utils/constants";
 
 const Body = () => {
   // * local state variable --- Super powerful variable
   const [reastaurentList, setReastaurentList] = useState([]);
   const [filteredReastaurentlist, setFilteredReastaurentList] = useState([]); // another copy
-
   const [searchText, setSearchText] = useState("");
+
   const onlineStatus = useOnlineStatus();
 
   const RestraurantCardStatus = withPromtedStatus(RestautrantCard);
@@ -20,24 +21,18 @@ const Body = () => {
   // console.log("body rendered");
 
   const fetcheData = async () => {
+    //www.swiggy.com/dapi/restaurants/list/v5?lat=18.51981990724166&lng=73.86026275822753&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING
     const data = await fetch(
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.062392&lng=77.570698&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-      //"https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.062392&lng=77.570698&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-      // {
-      //   body: JSON.stringify({
-      //     lat: "12.9848397",
-      //     lng: "77.7550999",
-      //   }),
-      // }
     );
 
     const json = await data.json();
     // console.log("json", json);
     setReastaurentList(
-      json.data.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      json.data.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
     setFilteredReastaurentList(
-      json.data.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      json.data.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
     // console.log("restaurantListt", reastaurentList);
   };
@@ -72,6 +67,15 @@ const Body = () => {
           >
             search
           </button>
+        </div>
+        <div className="search  m-4 p-4 space-x-1">
+          <input
+            type="text"
+            className="border border-solid bor  der-black"
+            placeholder="enter the value"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
         </div>
         <div className="search  m-4 p-4 space-x-1">
           <button
